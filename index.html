@@ -25,6 +25,10 @@
             cursor: pointer;
             margin-top: 20px;
         }
+        .countdown {
+            font-size: 20px;
+            margin-top: 20px;
+        }
     </style>
     <script>
         function executeCurl() {
@@ -38,11 +42,32 @@
             .catch((error) => {
                 console.error('Error:', error);
             });
+
+            // Start countdown
+            startCountdown(5);
+        }
+
+        function startCountdown(seconds) {
+            const countdownElement = document.getElementById('countdown');
+            countdownElement.style.display = 'block';
+            let remainingTime = seconds;
+            countdownElement.innerText = `Closing in ${remainingTime} seconds...`;
+
+            const countdownInterval = setInterval(() => {
+                remainingTime -= 1;
+                countdownElement.innerText = `Closing in ${remainingTime} seconds...`;
+
+                if (remainingTime <= 0) {
+                    clearInterval(countdownInterval);
+                    window.close(); // This will only work if the window was opened by a script
+                }
+            }, 1000);
         }
     </script>
 </head>
 <body>
     <img src="doorbell.png" alt="Doorbell" class="doorbell-image">
     <button onclick="executeCurl()">Click here to ring the doorbell</button>
+    <div id="countdown" class="countdown" style="display: none;"></div>
 </body>
 </html>
