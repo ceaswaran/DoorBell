@@ -36,22 +36,18 @@
         }
     </style>
     <script>
-        function requestFullscreenAndExecute() {
+        function executeCurl() {
             // Request fullscreen
             if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen().then(executeCurl);
+                document.documentElement.requestFullscreen();
             } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen().then(executeCurl);
+                document.documentElement.mozRequestFullScreen();
             } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
-                document.documentElement.webkitRequestFullscreen().then(executeCurl);
+                document.documentElement.webkitRequestFullscreen();
             } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen().then(executeCurl);
-            } else {
-                executeCurl();
+                document.documentElement.msRequestFullscreen();
             }
-        }
 
-        function executeCurl() {
             // Make the fetch call
             fetch('https://hooks.nabu.casa/gAAAAABmXI7QanjLFdRkHU7bGarhQ98SPJnD57V3ywvZbIAWgreCTE8wS5taDfrp6YzQFPf8wUjLR-21nhMyU02VTVr6U0EBYhga9Uq5vg5J5bXeG0PJ2sDYytzfSvnkHsVrKhahRUE5G5G4lh_0PlDgmeMv_xOPsx60alTB1nqaX50Ar3m2_C8=', {
                 method: 'POST'
@@ -87,9 +83,9 @@
     </script>
 </head>
 <body>
-    <div class="title">505 Door Bell</div>
+    <div class="title">505 Electronic Door Bell</div>
     <img src="doorbell.png" alt="Doorbell" class="doorbell-image">
-    <button onclick="requestFullscreenAndExecute()">Click here to ring the doorbell</button>
+    <button onclick="executeCurl()">Click here to ring the doorbell</button>
     <div id="countdown" class="countdown" style="display: none;"></div>
 </body>
 </html>
