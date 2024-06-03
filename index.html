@@ -36,18 +36,22 @@
         }
     </style>
     <script>
-        function executeCurl() {
+        function requestFullscreenAndExecute() {
             // Request fullscreen
             if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
+                document.documentElement.requestFullscreen().then(executeCurl);
             } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen();
+                document.documentElement.mozRequestFullScreen().then(executeCurl);
             } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
-                document.documentElement.webkitRequestFullscreen();
+                document.documentElement.webkitRequestFullscreen().then(executeCurl);
             } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
+                document.documentElement.msRequestFullscreen().then(executeCurl);
+            } else {
+                executeCurl();
             }
+        }
 
+        function executeCurl() {
             // Make the fetch call
             fetch('https://hooks.nabu.casa/gAAAAABmXI7QanjLFdRkHU7bGarhQ98SPJnD57V3ywvZbIAWgreCTE8wS5taDfrp6YzQFPf8wUjLR-21nhMyU02VTVr6U0EBYhga9Uq5vg5J5bXeG0PJ2sDYytzfSvnkHsVrKhahRUE5G5G4lh_0PlDgmeMv_xOPsx60alTB1nqaX50Ar3m2_C8=', {
                 method: 'POST'
@@ -61,7 +65,7 @@
             });
 
             // Start countdown
-            startCountdown(3);
+            startCountdown(5);
         }
 
         function startCountdown(seconds) {
@@ -85,7 +89,7 @@
 <body>
     <div class="title">505 Electronic Door Bell</div>
     <img src="doorbell.png" alt="Doorbell" class="doorbell-image">
-    <button onclick="executeCurl()">Click here to ring the doorbell</button>
+    <button onclick="requestFullscreenAndExecute()">Click here to ring the doorbell</button>
     <div id="countdown" class="countdown" style="display: none;"></div>
 </body>
 </html>
