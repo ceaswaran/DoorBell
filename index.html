@@ -3,7 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Execute Command</title>
+    <title>Ring the Doorbell</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .doorbell-image {
+            width: 200px;
+            height: auto;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
     <script>
         function executeCurl() {
             fetch('https://hooks.nabu.casa/gAAAAABmXI7QanjLFdRkHU7bGarhQ98SPJnD57V3ywvZbIAWgreCTE8wS5taDfrp6YzQFPf8wUjLR-21nhMyU02VTVr6U0EBYhga9Uq5vg5J5bXeG0PJ2sDYytzfSvnkHsVrKhahRUE5G5G4lh_0PlDgmeMv_xOPsx60alTB1nqaX50Ar3m2_C8=', {
@@ -20,6 +42,8 @@
     </script>
 </head>
 <body>
-    <button onclick="executeCurl()">Execute Command</button>
+    <img src="doorbell.png" alt="Doorbell" class="doorbell-image">
+    <p>Click here to ring the doorbell</p>
+    <button onclick="executeCurl()">Ring the Doorbell</button>
 </body>
 </html>
