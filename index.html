@@ -53,6 +53,9 @@
             const allowedLongitude = 80.23102; // Your home's longitude
             const allowedRadius = 5; // Radius in meters
 
+            console.log(`User's Latitude: ${lat}, Longitude: ${lon}`);
+            console.log(`Allowed Latitude: ${allowedLatitude}, Longitude: ${allowedLongitude}`);
+
             if (isWithinRadius(lat, lon, allowedLatitude, allowedLongitude, allowedRadius)) {
                 requestFullscreenAndRingBell();
             } else {
@@ -73,6 +76,8 @@
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
             const distance = R * c; // in meters
+            console.log(`Calculated Distance: ${distance} meters`);
+
             return distance <= radius;
         }
 
