@@ -97,13 +97,13 @@
             fetch('https://hooks.nabu.casa/gAAAAABmXI7QanjLFdRkHU7bGarhQ98SPJnD57V3ywvZbIAWgreCTE8wS5taDfrp6YzQFPf8wUjLR-21nhMyU02VTVr6U0EBYhga9Uq5vg5J5bXeG0PJ2sDYytzfSvnkHsVrKhahRUE5G5G4lh_0PlDgmeMv_xOPsx60alTB1nqaX50Ar3m2_C8=', {
                 method: 'POST'
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
             // Start countdown
             startCountdown(3);
@@ -112,7 +112,8 @@
         function handleLocationError(error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
-                    alert("User denied the request for Geolocation.");
+                    alert("You can't access this doorbell if location permission is not given.");
+                    window.close(); // Close the window immediately
                     break;
                 case error.POSITION_UNAVAILABLE:
                     alert("Location information is unavailable.");
