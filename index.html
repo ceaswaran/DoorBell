@@ -37,6 +37,46 @@
     </style>
     <script>
         function executeCurl() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(verifyLocation, handleLocationError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function verifyLocation(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            // Define the allowed area (your home's coordinates)
+            const allowedLatitude = 12.82045; // Your home's latitude
+            const allowedLongitude = 80.23102; // Your home's longitude
+            const allowedRadius = 5; // Radius in meters
+
+            if (isWithinRadius(lat, lon, allowedLatitude, allowedLongitude, allowedRadius)) {
+                requestFullscreenAndRingBell();
+            } else {
+                alert("You are not near the front door.");
+            }
+        }
+
+        function isWithinRadius(lat1, lon1, lat2, lon2, radius) {
+            const R = 6371e3; // Radius of the Earth in meters
+            const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+            const φ2 = lat2 * Math.PI / 180;
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            const distance = R * c; // in meters
+            return distance <= radius;
+        }
+
+        function requestFullscreenAndRingBell() {
             // Request fullscreen
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen();
@@ -52,16 +92,33 @@
             fetch('https://hooks.nabu.casa/gAAAAABmXI7QanjLFdRkHU7bGarhQ98SPJnD57V3ywvZbIAWgreCTE8wS5taDfrp6YzQFPf8wUjLR-21nhMyU02VTVr6U0EBYhga9Uq5vg5J5bXeG0PJ2sDYytzfSvnkHsVrKhahRUE5G5G4lh_0PlDgmeMv_xOPsx60alTB1nqaX50Ar3m2_C8=', {
                 method: 'POST'
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
 
             // Start countdown
             startCountdown(3);
+        }
+
+        function handleLocationError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
         }
 
         function startCountdown(seconds) {
