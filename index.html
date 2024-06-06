@@ -36,7 +36,17 @@
         }
     </style>
     <script>
+        const cooldownPeriod = 60000; // Cooldown period in milliseconds (1 minutes = 600 ms)
+
         function executeCurl() {
+            const lastRingTime = localStorage.getItem('lastRingTime');
+            const currentTime = new Date().getTime();
+
+            if (lastRingTime && currentTime - lastRingTime < cooldownPeriod) {
+                alert("You must wait a few minutes before ringing the bell again.");
+                return;
+            }
+
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(verifyLocation, handleLocationError);
             } else {
@@ -97,13 +107,14 @@
             fetch('https://hooks.nabu.casa/gAAAAABmXI7QanjLFdRkHU7bGarhQ98SPJnD57V3ywvZbIAWgreCTE8wS5taDfrp6YzQFPf8wUjLR-21nhMyU02VTVr6U0EBYhga9Uq5vg5J5bXeG0PJ2sDYytzfSvnkHsVrKhahRUE5G5G4lh_0PlDgmeMv_xOPsx60alTB1nqaX50Ar3m2_C8=', {
                 method: 'POST'
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                localStorage.setItem('lastRingTime', new Date().getTime()); // Save the time of the successful ring
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
             // Start countdown
             startCountdown(3);
